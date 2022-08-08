@@ -4,6 +4,7 @@ import configparser
 import vlc
 import sys
 import os
+import time
 
 #load settings
 config = configparser.ConfigParser()
@@ -31,17 +32,21 @@ media = vlc.Media(video)
 media_player.set_media(media)
 
 media_player.play()
+time.sleep(.1)
 media_player.set_pause(1)
 
 def manage_sound(indata, outdata, frames, time, status):
+    
     global singing_decay
     global decay
     global volumethreshold
     global singing
 
+    
     volume_norm = np.linalg.norm(indata)*10
     if volume_norm>volumethreshold:
         singing_decay=decay
+        singing=True
     else:
         if singing_decay>0:
             singing_decay-=1
@@ -54,11 +59,11 @@ def manage_sound(indata, outdata, frames, time, status):
         # start playing video
         if not media_player.is_playing():
             media_player.play()
-        print("DO STUFF",singing_decay)
+        #print("DO STUFF",singing_decay)
     else:
         if media_player.is_playing():
             media_player.set_pause(1)
-   
+    
 
 with sd.Stream(callback=manage_sound):
     sd.sleep(31536000 * 1000) #milliseconds
