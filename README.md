@@ -6,7 +6,7 @@ Requieres an usb audio interface
 # instructions
 
 - Setup default audio to external usb audio interface with "sudo raspi-config"
-- run "sudo ./install.sh"
+- run "sudo sh install.sh"
 
 
 place a video called "video.mp4" 
