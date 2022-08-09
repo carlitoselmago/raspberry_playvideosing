@@ -1,2 +1,3 @@
-sounddevice
+#sounddevice
 python-vlc
+pyalsaaudio
