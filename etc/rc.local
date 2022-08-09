@@ -1,0 +1,26 @@
+sleep 5
+# Print the IP address
+_IP=$(hostname -I) || true
+if [ "$_IP" ]; then
+  printf "My IP address is %s\n" "$_IP"
+fi
+sleep 5
+cd /home/pi
+
+#copy any mp4 file found in external drives 
+video=$(find /media -type f -name "*.mp4" | head -n 1)
+if [ ! -z "$video" ]
+then
+echo "Found video" $video
+echo "coping to local storage"
+cp "$video" "/home/pi/raspberry_playvideosing/video.mp4"
+else
+echo "No videos found in external drives"
+fi
+
+sleep 25
+
+#run script 
+cd /home/pi/raspberry_playvideosing/
+python main.py
+exit 0
