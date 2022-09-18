@@ -24,5 +24,6 @@ sleep 25
 
 #run script 
 cd /home/pi/raspberry_playvideosing/
+sleep 1
 python main.py
 exit 0
