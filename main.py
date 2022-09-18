@@ -32,8 +32,11 @@ media = vlc.Media(video)
 media_player.set_media(media)
 
 media_player.play()
-time.sleep(.5)
+time.sleep(2)
 media_player.set_pause(1)
+
+videolen=media_player.get_length()
+print("videolen",videolen)
 
 #start audio listening ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -81,6 +84,13 @@ while True:
             if not media_player.is_playing():
                 media_player.play()
             #print("DO STUFF",singing_decay)
+
+            #check for video loop
+            remaining=videolen-media_player.get_time()
+            if remaining<200: 
+                #if remaining is less than 200ms (rarelly gives 0ms)
+                media_player.set_time(1)
+                
         else:
             if media_player.is_playing():
                 #pause video 
