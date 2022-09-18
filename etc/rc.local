@@ -1,3 +1,5 @@
+#!/bin/sh -e
+
 sleep 5
 # Print the IP address
 _IP=$(hostname -I) || true
