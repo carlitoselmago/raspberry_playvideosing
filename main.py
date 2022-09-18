@@ -85,12 +85,6 @@ while True:
                 if not media_player.is_playing():
                     media_player.play()
                 #print("DO STUFF",singing_decay)
-
-                #check for video loop
-                remaining=videolen-media_player.get_time()
-                if remaining<200: 
-                    #if remaining is less than 200ms (rarelly gives 0ms)
-                    media_player.set_time(1)
                     
             else:
                 if media_player.is_playing():
@@ -107,5 +101,11 @@ while True:
         current=media_player.get_time()
         print("error while true, current:",current)
 
+
+    #check for video loop
+    remaining=videolen-media_player.get_time()
+    if remaining<200: 
+        #if remaining is less than 200ms (rarelly gives 0ms)
+        media_player.set_time(1)
 
     time.sleep(.001) #increase this in case of lower cpu specs
