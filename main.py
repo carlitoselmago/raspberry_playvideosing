@@ -104,6 +104,7 @@ while True:
 
     #check for video loop
     remaining=videolen-media_player.get_time()
+    print("rem",remaining)
     if remaining<200: 
         #if remaining is less than 200ms (rarelly gives 0ms)
         media_player.set_time(1)
