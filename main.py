@@ -97,6 +97,13 @@ while True:
                     #pause video 
                     media_player.set_pause(1)
     except:
+        media_player = vlc.MediaPlayer()
+ 
+        # media object
+        media = vlc.Media(video)
+        
+        # setting media to the media player
+        media_player.set_media(media)
         current=media_player.get_time()
         print("error while true, current:",current)
 
