@@ -60,41 +60,45 @@ inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
 inp.setperiodsize(160)
 
 while True:
-    # Read data from device
-    l,data = inp.read()
-    if l:
-        # Return the maximum of the absolute value of all samples in a fragment.
-        #print (audioop.max(data, 2))
-        volume_norm=int(audioop.max(data, 2)/100)
-        #print ("|" * volume_norm)
+    try:
+        # Read data from device
+        l,data = inp.read()
+        if l:
+            # Return the maximum of the absolute value of all samples in a fragment.
+            #print (audioop.max(data, 2))
+            volume_norm=int(audioop.max(data, 2)/100)
+            #print ("|" * volume_norm)
 
-        if volume_norm>volumethreshold:
-            singing_decay=decay
-            singing=True
-        else:
-            if singing_decay>0:
-                singing_decay-=1
+            if volume_norm>volumethreshold:
+                singing_decay=decay
                 singing=True
             else:
-                singing=False
-        #print ("|" * int(volume_norm))
+                if singing_decay>0:
+                    singing_decay-=1
+                    singing=True
+                else:
+                    singing=False
+            #print ("|" * int(volume_norm))
 
-        if singing:
-            # start playing video
-            if not media_player.is_playing():
-                media_player.play()
-            #print("DO STUFF",singing_decay)
+            if singing:
+                # start playing video
+                if not media_player.is_playing():
+                    media_player.play()
+                #print("DO STUFF",singing_decay)
 
-            #check for video loop
-            remaining=videolen-media_player.get_time()
-            if remaining<200: 
-                #if remaining is less than 200ms (rarelly gives 0ms)
-                media_player.set_time(1)
-                
-        else:
-            if media_player.is_playing():
-                #pause video 
-                media_player.set_pause(1)
+                #check for video loop
+                remaining=videolen-media_player.get_time()
+                if remaining<200: 
+                    #if remaining is less than 200ms (rarelly gives 0ms)
+                    media_player.set_time(1)
+                    
+            else:
+                if media_player.is_playing():
+                    #pause video 
+                    media_player.set_pause(1)
+    except:
+        current=media_player.get_time()
+        print("error while true, current:",current)
 
 
     time.sleep(.001) #increase this in case of lower cpu specs
